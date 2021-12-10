@@ -63,5 +63,10 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log(this.form.controls);
+    if(this.form.valid){
+      alert("Registerred successfully");
+      this.router.navigate(['/login']);
+
+    }
 }
 }
