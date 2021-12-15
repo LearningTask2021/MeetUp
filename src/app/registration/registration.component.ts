@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Employee } from '../model/employee';
+import { EmployeeService } from '../services/employee.service';
+import { Address } from '../model/address';
 
 @Component({
   selector: 'app-registration',
@@ -10,10 +13,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegistrationComponent implements OnInit {
 
   form: FormGroup;
-  loading = false;
+ 
   submitted = false;
+  private employee:Employee;
+  
+  
 
   constructor(
+    private employeeService:EmployeeService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -21,6 +28,13 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      address: this.formBuilder.group({
+       streetName:[''],
+      city:[''],
+      state:[''],
+      country:[''],
+      zipCode:[''],
+      }),
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email:['', [Validators.email,Validators.required]],
@@ -62,10 +76,20 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.form.controls);
+
     if(this.form.valid){
-      alert("Registerred successfully");
-      this.router.navigate(['/login']);
+      this.employee=Object.assign({},this.form.value);
+      this.employee.address=Object.assign({},this.employee.address);
+
+      this.employeeService.addEmployee(this.employee).subscribe(
+        data=>{
+          console.log('from post method');
+          console.log(data);
+         alert("Registerred successfully");
+         this.router.navigate(['/login']);
+        }
+      );
+     
 
     }
 }

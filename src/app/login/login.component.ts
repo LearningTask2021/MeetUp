@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { EmployeeService } from '../services/employee.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 
 @Component({
@@ -15,8 +18,10 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  display=false;
 
   constructor( 
+    private employeeService:EmployeeService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -35,7 +40,30 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
-      this.submitted = true;
-      console.log(this.loginForm.controls);
+    this.submitted = true;
+    if(this.loginForm.valid){
+     
+      //console.log(this.loginForm.controls);
+      const user = new Map<String, string>();
+      
+        user["UserName"] = this.loginForm.value["username"];
+        user["password"] = this.loginForm.value["password"];
+
+    this.employeeService.loginUser(user).subscribe(
+      (data)=>
+      {
+        if(data!=null){ 
+        this.employeeService.handleLogin(data);
+          alert('login successful');
+          this.router.navigate(['../users'],{state: {data:this.f.username.value}});
+        }
+        else{
+          this.employeeService.handleError();
+        }
+      }
+    );
+      }
+     
 }
+
 }

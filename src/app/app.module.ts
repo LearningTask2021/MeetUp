@@ -13,6 +13,9 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ErrorComponent } from './error/error.component';
+import { MenuComponent } from './menu/menu.component';
 
 
 const routes: Routes = [
@@ -20,6 +23,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'users',component:UsersComponent},
   {path:'register',component:RegistrationComponent},
+  {path:'error',component:ErrorComponent},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];
@@ -30,7 +34,9 @@ const routes: Routes = [
     AppComponent,
     UsersComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ErrorComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +45,7 @@ const routes: Routes = [
     BsDatepickerModule.forRoot(),
      [RouterModule.forRoot(routes)],
      ReactiveFormsModule,
+     HttpClientModule
    
   ],
   exports: [RouterModule],
