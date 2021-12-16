@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
      
     ngOnInit() {
       this.loginForm = this.formBuilder.group({
-          username: ['', Validators.required],
+          userName: ['', Validators.required],
           password: ['', Validators.required]
       });
   }
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
       //console.log(this.loginForm.controls);
       const user = new Map<String, string>();
       
-        user["UserName"] = this.loginForm.value["username"];
+        user["UserName"] = this.loginForm.value["userName"];
         user["password"] = this.loginForm.value["password"];
 
     this.employeeService.loginUser(user).subscribe(
@@ -55,10 +55,11 @@ export class LoginComponent implements OnInit {
         if(data!=null){ 
         this.employeeService.handleLogin(data);
           alert('login successful');
-          this.router.navigate(['../users'],{state: {data:this.f.username.value}});
+          this.router.navigate(['../users'],{state: {data:this.f.userName.value}});
         }
         else{
           this.employeeService.handleError();
+          
         }
       }
     );

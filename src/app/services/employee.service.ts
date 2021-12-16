@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Employee } from '../model/employee';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +21,18 @@ export class EmployeeService {
     })
 };
 
+users:Employee[];
+
   constructor(public http:HttpClient) { }
 
   addEmployee(employee:Employee){
-    return this.http.post("http://localhost:8080/Employee/employee",employee,)
+    return this.http.post<Employee>("http://localhost:8080/Employee/employee",employee)
+    
     
   }
 
   loginUser(user:Map<String,String>){
-    return this.http.post("http://localhost:8080/Employee/employee/login",user,this.httpOptions);
+    return this.http.post<Employee>("http://localhost:8080/Employee/login",user,this.httpOptions);
   }
 
   handleLogin(user) {
@@ -46,7 +53,7 @@ export class EmployeeService {
     let user = JSON.parse(sessionStorage.getItem(this.USER_SESSION_ATTRIBUTE_NAME));
     if (user === null) return ''
     console.log(user);
-    return user.username
+    return user.userName
   }
 
   logoutUser(){
@@ -55,4 +62,8 @@ export class EmployeeService {
     return true;
   }
   
+  getAllUsers(){
+    return this.http.get<Employee[]>("http://localhost:8080/Employee/employee")
+   
+  }
 }

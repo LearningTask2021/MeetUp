@@ -24,9 +24,13 @@ export class MenuComponent implements OnInit {
 
   handleLogout() {
     if(this.employeeService.logoutUser()){
-      this.router.navigate(["../login"]);
+      this.router.navigate(["../home"]);
     }
     
+  }
+
+  editProfile(){
+    this.router.navigate(["../register"]);
   }
 
 }

@@ -42,7 +42,7 @@ export class RegistrationComponent implements OnInit {
       company:[''],
       designation:[''],
       dateofBirth:[''],
-      username: ['', Validators.required],
+      userName: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword:['',Validators.required],
     }
@@ -78,6 +78,10 @@ export class RegistrationComponent implements OnInit {
     this.submitted = true;
 
     if(this.form.valid){
+      if(this.form.controls.userName.value=="admin"){
+        alert("username cannot be admin");
+        return "";
+      }
       this.employee=Object.assign({},this.form.value);
       this.employee.address=Object.assign({},this.employee.address);
 

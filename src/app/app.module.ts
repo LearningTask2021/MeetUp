@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 import { HomeComponent } from './home/home.component';
@@ -19,13 +20,12 @@ import { MenuComponent } from './menu/menu.component';
 
 
 const routes: Routes = [
-  {path:'',component:LoginComponent},
   { path: 'home', component: HomeComponent},
   { path: 'users',component:UsersComponent},
   {path:'register',component:RegistrationComponent},
   {path:'error',component:ErrorComponent},
   // otherwise redirect to home
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'home' }
 ];
 
 
@@ -36,7 +36,8 @@ const routes: Routes = [
     LoginComponent,
     RegistrationComponent,
     ErrorComponent,
-    MenuComponent
+    MenuComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +46,8 @@ const routes: Routes = [
     BsDatepickerModule.forRoot(),
      [RouterModule.forRoot(routes)],
      ReactiveFormsModule,
-     HttpClientModule
+     HttpClientModule,
+     AgGridModule.withComponents([])
    
   ],
   exports: [RouterModule],
