@@ -17,7 +17,8 @@ export class EmployeeService {
    httpOptions = {
     headers: new HttpHeaders({
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        
     })
 };
 
@@ -26,13 +27,13 @@ users:Employee[];
   constructor(public http:HttpClient) { }
 
   addEmployee(employee:Employee){
-    return this.http.post<Employee>("http://localhost:8080/Employee/employee",employee)
+    return this.http.post<Employee>("http://localhost:8080/employee",employee)
     
     
   }
 
   loginUser(user:Map<String,String>){
-    return this.http.post<Employee>("http://localhost:8080/Employee/login",user,this.httpOptions);
+    return this.http.post<Employee>("http://localhost:8080/login",user,this.httpOptions);
   }
 
   handleLogin(user) {
@@ -63,7 +64,7 @@ users:Employee[];
   }
   
   getAllUsers(){
-    return this.http.get<Employee[]>("http://localhost:8080/Employee/employee")
+    return this.http.get<Employee[]>("http://localhost:8080/employee")
    
   }
 }

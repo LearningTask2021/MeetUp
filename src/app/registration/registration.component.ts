@@ -87,10 +87,15 @@ export class RegistrationComponent implements OnInit {
 
       this.employeeService.addEmployee(this.employee).subscribe(
         data=>{
+          if(data==null){
+            alert("userName is already taken");
+          }
+          else{
           console.log('from post method');
           console.log(data);
          alert("Registerred successfully");
          this.router.navigate(['/login']);
+          }
         }
       );
      

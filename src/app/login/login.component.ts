@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
     this.employeeService.loginUser(user).subscribe(
       (data)=>
       {
+        console.log(data);
         if(data!=null){ 
         this.employeeService.handleLogin(data);
           alert('login successful');
